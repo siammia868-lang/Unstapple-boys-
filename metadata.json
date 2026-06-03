@@ -1,0 +1,11 @@
+{
+  "name": "Unstapple Boys",
+  "description": "A secure real-time full-stack chat, photos, group rooms, and location sharing hub for up to 100 members.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

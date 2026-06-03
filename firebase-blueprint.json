@@ -1,0 +1,151 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a registered user in Unstapple Boys chat hub.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user's unique Firebase Auth UID."
+        },
+        "username": {
+          "type": "string",
+          "description": "Display name of the user."
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar image URL."
+        },
+        "email": {
+          "type": "string",
+          "description": "Private email address."
+        },
+        "lastActive": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user was last online."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Current latitude for live location map."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Current longitude for live location map."
+        },
+        "locationSharedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when location was last updated."
+        },
+        "shareLocationEnabled": {
+          "type": "boolean",
+          "description": "Whether the user currently opts in to share live location with the group."
+        }
+      },
+      "required": ["uid", "username", "lastActive"]
+    },
+    "Group": {
+      "title": "Group",
+      "description": "A group chat room or channel.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique group identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the group channel."
+        },
+        "description": {
+          "type": "string",
+          "description": "Purpose of the channel."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "UID of the creator."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of channel creation."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "Whether this is a standard system channel."
+        }
+      },
+      "required": ["id", "name", "createdBy", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A message item inside a chat, photo board, or location event.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique message identifier."
+        },
+        "text": {
+          "type": "string",
+          "description": "Body text of the message."
+        },
+        "senderId": {
+          "type": "string",
+          "description": "UID of the sender."
+        },
+        "senderName": {
+          "type": "string",
+          "description": "Display name of the sender."
+        },
+        "senderPhoto": {
+          "type": "string",
+          "description": "Photo of the sender."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of message creation."
+        },
+        "messageType": {
+          "type": "string",
+          "enum": ["text", "image", "location"],
+          "description": "The category of payload for this message."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the uploaded photo."
+        },
+        "locationName": {
+          "type": "string",
+          "description": "Shorthand description/name of the shared point."
+        },
+        "latitude": {
+          "type": "number",
+          "description": "Latitude coordinate for shared location pin."
+        },
+        "longitude": {
+          "type": "number",
+          "description": "Longitude coordinate for shared location pin."
+        }
+      },
+      "required": ["id", "senderId", "senderName", "createdAt", "messageType"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles, activity statuses, and live coordinates."
+    },
+    "/groups/{groupId}": {
+      "schema": "Group",
+      "description": "Stores individual chat/activity group details."
+    },
+    "/groups/{groupId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Subcollection storing real-time messages within a channel."
+    }
+  }
+}
